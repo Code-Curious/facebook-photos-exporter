@@ -1,0 +1,21 @@
+{
+  "name": "facebook-photos-exporter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.4.1",
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "lodash": "^4.17.4",
+    "morgan": "^1.8.2",
+    "multer": "^1.3.0",
+    "passport-facebook": "^2.1.1"
+  }
+}

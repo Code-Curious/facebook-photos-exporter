@@ -1,0 +1,21 @@
+{
+  "name": "facebook-photos-exporter",
+  "authors": [
+    "salim_elalami <salim.elalami@um5s.net.ma>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "materialize": "^0.99.0",
+    "jquery": "^3.2.1"
+  }
+}
