@@ -1,1 +1,64 @@
-hello from index.html
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <base href="/">
+    <title>Facebook Photos Exporter</title>
+    <!-- CSS -->
+    <link rel="shortcut icon" href="img/favicon.ico">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="bower_components/materialize/dist/css/materialize.css" media="all">
+    <link rel="stylesheet" type="text/css" href="bower_components/components-font-awesome/css/font-awesome.css" media="all">
+    <!-- MY STYLE -->
+    <link rel="stylesheet" type="text/css" href="css/style.css" media="all">
+
+</head>
+
+<!-- <body ng-app="app"> -->
+<body ng-app="app">
+  <div class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper indigo darken-3">
+        <a href="#!" class="brand-logo">Facebook Photos Exporter</a>
+        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="albums">Albums</a></li>
+          <li><a href="uploads">Uploads</a></li>
+        </ul>
+        <ul class="side-nav" id="mobile-demo" style="transform: translateX(-100%);">
+          <li><a href="albums">Albums</a></li>
+          <li><a href="uploads">Uploads</a></li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+  <!-- VIEW CONTENT -->
+  <div class="container">
+    <div ng-view></div>
+  </div>
+
+  <!-- <div class="footer"></div> -->
+
+              
+                    <!-- LIBS -->
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/materialize/dist/js/materialize.js"></script>
+  
+  <script>
+     $(".button-collapse").sideNav();
+  </script>
+    
+                    <!-- MY SCRIPTS -->
+  <script src="app/app.js"></script>
+
+  <script src="app/controllers/login.controller.js"></script>
+  <script src="app/controllers/albums.controller.js"></script>
+  <script src="app/controllers/photos.controller.js"></script>
+  <script src="app/controllers/uploads.controller.js"></script>
+
+  <script src="app/services/api.service.js"></script>
+
+</body>
+</html>
