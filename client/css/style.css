@@ -2,7 +2,25 @@ body{
   background-color: #e9ebee;
 }
 
-
 .login-row{
   text-align: center;
 }
+
+.albums-grid .card-image{
+  height: 300px;
+}
+
+.albums-grid .card-image img{
+  height: 100%;
+  object-fit: cover;
+}
+
+.photos-grid .card-image{
+  height: 300px;
+}
+
+.photos-grid .card-image img{
+  height: 100%;
+  object-fit: cover;
+}
+

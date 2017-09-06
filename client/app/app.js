@@ -8,7 +8,7 @@ angular.module('app', ['ngRoute'])
          // template: '<h2>HELLOOOO ALBUMS</h2>',
          controller: 'AlbumsCtrl',
       })
-      .when('/photos',{
+      .when('/photos/:albumId',{
          templateUrl: 'app/views/photos.html',
          controller: 'PhotosCtrl',
       })
@@ -19,5 +19,8 @@ angular.module('app', ['ngRoute'])
       .when('/login',{
          templateUrl: 'app/views/login.html',
          controller: 'LoginCtrl',
+      })
+      .otherwise({
+         redirectTo: '/albums'
       })
    })

@@ -19,15 +19,17 @@
   <div class="navbar-fixed">
     <nav>
       <div class="nav-wrapper indigo darken-3">
-        <a href="#!" class="brand-logo">Facebook Photos Exporter</a>
+        <a href="#!" class="brand-logo">FPE</a>
         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
           <li><a href="albums">Albums</a></li>
           <li><a href="uploads">Uploads</a></li>
+          <li><a href="auth/logout">Logout</a></li> <!-- TODO: fix redirection logout -->
         </ul>
         <ul class="side-nav" id="mobile-demo" style="transform: translateX(-100%);">
           <li><a href="albums">Albums</a></li>
           <li><a href="uploads">Uploads</a></li>
+          <li><a href="auth/logout">Logout</a></li> <!-- TODO: fix redirection logout -->
         </ul>
       </div>
     </nav>
@@ -45,6 +47,7 @@
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="bower_components/jquery/dist/jquery.js"></script>
   <script src="bower_components/materialize/dist/js/materialize.js"></script>
+  <script src="bower_components/underscore/underscore.js"></script>
   
   <script>
      $(".button-collapse").sideNav();

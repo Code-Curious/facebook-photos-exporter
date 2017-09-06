@@ -1,1 +1,21 @@
-<h1>PHOTOS</h1>
+<h1>PHOTOS ({{count}})</h1>
+
+<div class="photos-grid">
+  <div class="row">
+    <div class="col s3 m3" ng-repeat="photo in photos" >
+      <div class="card hoverable">
+        <div class="card-image">
+          <img src="{{photo.images[0].source}}">
+          <span class="card-title" ng-app="photo.name">{{photo.name}}</span>
+          <a class="btn-floating btn-large halfway-fab waves-effect waves-light indigo darken-3"><i class="material-icons">check</i></a>
+        </div>
+        <div class="card-content" ng-if="photo.description">
+          <p>{{photo.description}}</p>
+        </div>
+        <div class="card-action center">
+          <a ng-href="#">Browse</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

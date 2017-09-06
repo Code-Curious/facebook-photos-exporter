@@ -25,11 +25,20 @@ module.exports = function(app, passport) {
       //   console.log("=====> ACCESSING AUTH/FACEBOOK/CALLBACK");
       //   next();
       // })
-      passport.authenticate('facebook', {
-         successRedirect : '/albums',
-         failureRedirect : '/autherror'
+      // passport.authenticate('facebook', {
+      //    successRedirect : '/albums',
+      //    failureRedirect : '/autherror'
          // failureFlash: 'Error while authentificating with Facebook'
-      } ));
+      function (req, res, next) {
+           var authenticator = passport.authenticate ('facebook', {
+             successRedirect: '/albums',
+             failureRedirect: '/'
+            });
+
+          // delete req.session.returnTo;
+          authenticator (req, res, next);
+          })
+      // } ));
 
    // FIXED: authorization code already bug used was caused by the ordering of routes definition
    app.use('/auth/facebook', 
@@ -84,7 +93,11 @@ module.exports = function(app, passport) {
       res.sendFile(path.join('../client/app/', req.url));
    })
 
-   // APIS CALLED FROM ANGULAR SERVICE :
+   //////////////////////////////////////
+   // APIS CALLED FROM ANGULAR SERVICE //
+   //////////////////////////////////////
+
+   // Get all albums :
    app.get("/api/albums", function(req, res) {
       console.log("=====> CALLING /API/ALBUMS");
       console.log("req.session :", req.session);
@@ -109,6 +122,33 @@ module.exports = function(app, passport) {
       })
 
    })
+
+   // Get albums photos:
+   app.get("/api/albums/:albumId", function(req, res) {
+      console.log("=====> CALLING /API/ALBUMS");
+      console.log("req.session :", req.session);
+      console.log("req.user :", req.user);
+      if (!req.user) return res.status(401).send('Unauthorized');
+
+      console.log("req.user.facebook.token :", req.user.facebook.token);
+
+      let options = {
+        method: 'GET',
+        url: 'https://graph.facebook.com/v2.9/' + req.params.albumId,
+        qs: {
+          access_token: req.user.facebook.token,
+          fields: 'count,photos{images,name,id}'
+        },
+        json: true // Automatically parses the JSON string in the response
+      };
+      
+      let FbApiRequest = request(options);
+      FbApiRequest.then(function(FbResult) {
+         return res.json(FbResult);
+      })
+
+   })
+   
 
 
 
