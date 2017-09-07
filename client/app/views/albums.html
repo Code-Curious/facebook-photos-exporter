@@ -8,13 +8,15 @@
         <div class="card-image">
           <img src="{{album.photos.data[0].images[0].source}}">
           <span class="card-title">{{album.name}} ({{album.count}})</span>
-          <a class="btn-floating btn-large halfway-fab waves-effect waves-light red"><i class="material-icons">add</i></a>
+          <a class="btn-floating btn-large halfway-fab waves-effect waves-light indigo darken-3">
+            <i class="material-icons">add</i>
+          </a>
         </div>
         <div class="card-content" ng-if="album.description">
           <p>{{album.description}}</p>
         </div>
         <div class="card-action center">
-          <a ng-href="photos/{{album.id}}">Browse</a>
+          <a ng-href="photos/{{album.id}}" class="btn waves-effect waves-light indigo accent-2 hoverable">Browse</a>
         </div>
       </div>
     </div>

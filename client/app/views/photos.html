@@ -2,20 +2,37 @@
 
 <div class="photos-grid">
   <div class="row">
-    <div class="col s3 m3" ng-repeat="photo in photos" >
+    <div class="col s3 m3" ng-repeat="photo in pagePhotos">
       <div class="card hoverable">
         <div class="card-image">
-          <img src="{{photo.images[0].source}}">
-          <span class="card-title" ng-app="photo.name">{{photo.name}}</span>
-          <a class="btn-floating btn-large halfway-fab waves-effect waves-light indigo darken-3"><i class="material-icons">check</i></a>
+          <img src="{{photo.images[0].source}}" class="materialboxed">
+          <span class="card-title" ng-if="photo.name">{{photo.name}}</span>
+          <a ng-click="selectPhoto(photo)" class="btn-floating btn-large halfway-fab waves-effect waves-light indigo darken-3">
+            <i ng-if="!isPhotoSelected(photo.id)" class="material-icons">add</i>
+            <i ng-if="isPhotoSelected(photo.id)" class="material-icons ">check</i>
+          </a>
         </div>
         <div class="card-content" ng-if="photo.description">
           <p>{{photo.description}}</p>
         </div>
-        <div class="card-action center">
-          <a ng-href="#">Browse</a>
+        <!--<div class="card-action center">
+          <a ng-href="#">Upload</a>
+        </div> -->      
         </div>
-      </div>
     </div>
   </div>
+</div>
+
+<!-- Pagination -->
+<ul class="center photos-pagination" uib-pagination items-per-page="itemsPerPage" total-items="count" ng-model="currentPage" ng-change="pageChanged()"></ul>
+
+<div class="fixed-action-btn" ng-if="selectedPhotos.length">
+  <a ng-click="uploadPhotos()" class="btn-floating btn-large indigo accent-2 tooltipped" data-position="left" data-delay="50" data-tooltip="Upload photos to server ({{selectedPhotos.length}})">
+    <i class="large material-icons">publish</i>
+  </a>
+  <ul>
+    <li><a ng-click="clearPhotoSelection()" class="btn-floating green tooltipped" data-position="left" data-delay="50" data-tooltip="Clear Photos selection ({{selectedPhotos.length}})">
+    <i class="material-icons">clear</i>
+    </a></li>
+  </ul>
 </div>

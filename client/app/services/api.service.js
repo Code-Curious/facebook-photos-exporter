@@ -10,8 +10,8 @@ angular.module('app')
          getDownloadedPhotos: function() {
             return $http.get('/api/downloadedPhotos');
          },
-         downloadPhotos: function(photosId) {
-            return $http.post('/api/downloadPhotos', photosId); // download photos to server, call facebook API to get the largest image file
+         uploadPhotos: function(photosArray) {
+            return $http.post('/api/downloadPhotos', photosArray); // download photos to server, call facebook API to get the largest image file
          }
       }
    })

@@ -24,3 +24,14 @@ body{
   object-fit: cover;
 }
 
+.pagination li.active{
+  background-color: #283593;
+}
+
+.photos-pagination{
+  margin-top: 100px;
+}
+
+.material-placeholder{
+  height: 100%;
+}

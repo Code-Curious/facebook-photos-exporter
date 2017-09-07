@@ -1,1 +1,22 @@
 <h1>UPLOADS</h1>
+
+<div class="photos-grid">
+  <div class="row">
+    <div class="col s3 m3" ng-repeat="photo in photos">
+      <div class="card hoverable">
+        <div class="card-image">
+          <img src="{{photo.url}}" class="materialboxed">
+          <span class="card-title" ng-if="photo.name">{{photo.name}}</span>
+          <a ng-click="selectPhoto(photo)" class="btn-floating btn-large halfway-fab waves-effect waves-light red">
+            <i class="material-icons">delete</i>
+          </a>
+        </div>
+        <div class="card-content">
+          <p>{{photo.description}}</p>
+        </div>
+        <!--<div class="card-action center">
+        </div> -->      
+        </div>
+    </div>
+  </div>
+</div>

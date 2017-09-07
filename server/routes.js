@@ -2,7 +2,10 @@
 
 const path = require('path'),
       util = require('util'),
+      fs = require('fs'),
       request = require('request-promise'),
+      async =  require('async'),
+      _ = require('lodash'),
       User = require('./models/user.model');
 
 
@@ -137,7 +140,7 @@ module.exports = function(app, passport) {
         url: 'https://graph.facebook.com/v2.9/' + req.params.albumId,
         qs: {
           access_token: req.user.facebook.token,
-          fields: 'count,photos{images,name,id}'
+          fields: 'count,photos{id,name,images,album}'
         },
         json: true // Automatically parses the JSON string in the response
       };
@@ -149,7 +152,107 @@ module.exports = function(app, passport) {
 
    })
    
+   // upload photos to server :
+   app.post("/api/downloadPhotos", function(req, res) {
+      console.log("=====> CALLING /API/DOWNLOADPHOTOS");
+      console.log("****************");
+      console.log("req.user :", req.user);
+      console.log("****************");
+      if (!req.user) return res.status(401).send('Unauthorized');
 
+      console.log("req.user.facebook.token :", req.user.facebook.token);
+      // console.log("req.body :\n", JSON.stringify(req.body, null, 2));
+
+      async.each(req.body, function(photo, asyncCallback){
+         let photoUrl = photo.images[0].source;
+         let filePath = "client/img/uploads/" + photo.id + ".jpg";
+         saveFile(photoUrl, filePath, function() {
+            console.log("--> a file uploaded successfully");
+            asyncCallback();
+
+         }, function(streamError) {
+            // in case of error during current iteration
+            if (streamError) {
+               console.log("error while uploading a file");
+               console.error("streamError :", streamError);
+               asyncCallback(streamError);
+
+            }
+         });
+      }, function(asyncErr) {
+         // in case of error in all
+         if (asyncErr) {
+            console.log("ASYNCERR :", asyncErr);
+            return res.status(500).send(asyncErr);
+         }
+         else{
+            console.log("All files have been uploaded");
+            // updateUserWithPhotos()
+            // call DB to update user with the new photos
+            User.findById(req.user._id)
+            // .exec()
+            .then(function(user, err) {
+               if (err) return console.error(err);
+               req.body.forEach(function(photo) {
+                  if (_.some(user.photos, (userPhoto) => userPhoto.FBid == photo.id)) {
+                     console.log("PHOTO ALREADY EXISTS IN DATABASE");
+                  }
+                  else{
+                     user.photos.push({
+                        created: Date.now(),
+                        url: "img/uploads/" + photo.id + ".jpg",
+                        FBid: photo.id,
+                        name: photo.name,
+                        description: photo.description,
+                        albumId: photo.album.id,
+                        albumName: photo.album.name
+                     });
+                  }
+               });
+
+
+               console.log("user before save() :", JSON.stringify(user, null, 2));
+               user.save(function(err) {
+                  if (err) return res.status(500).send(err);
+                  else{
+                     console.log("=> User updated");
+                     res.jsonp(user);
+                  }
+               })
+            })
+         }
+      });
+   })
+
+/*   function updateUserWithPhotos(userId, photos) {
+      return User.find({_id: userId}).lean().exec()
+   }
+*/
+  /* function savePhotosFiles(argument) {
+      // Promise.all([])
+        
+   }*/
+
+   function saveFile(uri, filename, successCallback, errorCallback) {
+      request.head(uri, function(err, res, body) {
+         console.log('content-type:', res.headers['content-type']);
+         console.log('content-length:', res.headers['content-length']);
+
+         request(uri).pipe(fs.createWriteStream(filename))
+            // .on('error', errorCallback);
+            .on('close', successCallback);
+      });
+   }
+
+   // Api for Uploads page :
+   app.get("/api/downloadedPhotos", function(req, res) {
+      User.findById(req.user._id)
+      .then(function(user, err) {
+         if (err) return console.error(err);
+         return res.send(user.photos);
+      })
+   })
+   
 
 
    // all other routes : send index.html (handled client side) + verify authentication
