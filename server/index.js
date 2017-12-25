@@ -46,3 +46,12 @@ require('./routes.js')(app, passport); // configure the routes
 app.listen(3000, function() {
    console.log("app is listening on localhost:3000");
 })
+
+var server = require('http').createServer(app);  
+
+// var io = require('socket.io').listen(app);
+var io = require('socket.io')(server);
+
+io.on('connection', function(client) {  
+    console.log('Client connected...');
+})

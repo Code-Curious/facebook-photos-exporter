@@ -1,4 +1,8 @@
-angular.module('app', ['ngRoute', 'ui.bootstrap'])
+angular.module('app', [
+   'ngRoute',
+   'ui.bootstrap',
+   'btford.socket-io'
+   ])
    .config(function($routeProvider, $locationProvider) {
       $locationProvider.html5Mode(true); // remove # from urls
 
